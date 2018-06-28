@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Form,
   FormGroup,
@@ -16,11 +16,17 @@ class SearchRecipes extends Component {
       dish: ''
     }
   }
+
   search = () => {
-    let { ingredients, dish } = this.state;
+    let {ingredients, dish} = this.state;
     const url = `http://www.recipepuppy.com/api/?i=${ingredients}&q=${dish}`;
-    console.log('state', this.state, 'url', url);
+    fetch(url, {
+      method: 'GET'
+    })
+      .then(response => response.json())
+      .then(json => console.log('recipes', json));
   }
+
   render() {
     return (
       <Form inline>
@@ -32,7 +38,7 @@ class SearchRecipes extends Component {
           <FormControl
             type="text"
             placeholder="garlic, chicken"
-            onChange={ event => this.setState({ ingredients: event.target.value }) }
+            onChange={event => this.setState({ingredients: event.target.value})}
           />
         </FormGroup>
         {' '}
@@ -44,11 +50,11 @@ class SearchRecipes extends Component {
           <FormControl
             type="text"
             placeholder="adobo"
-            onChange={ event => this.setState({ dish: event.target.value }) }
+            onChange={event => this.setState({dish: event.target.value})}
           />
         </FormGroup>
         {' '}
-        <Button onClick={ () => this.search() }>
+        <Button onClick={() => this.search()}>
           Submit
         </Button>
       </Form>
