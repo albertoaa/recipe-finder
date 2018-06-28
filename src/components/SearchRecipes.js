@@ -6,6 +6,8 @@ import {
   ControlLabel,
   Button
 } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { setRecipes } from "../actions";
 
 class SearchRecipes extends Component {
   constructor() {
@@ -24,7 +26,9 @@ class SearchRecipes extends Component {
       method: 'GET'
     })
       .then(response => response.json())
-      .then(json => console.log('recipes', json));
+      .then(json => {
+        this.props.setRecipes(json.results);
+      });
   }
 
   render() {
@@ -62,4 +66,4 @@ class SearchRecipes extends Component {
   }
 }
 
-export default SearchRecipes;
+export default connect(null, { setRecipes })(SearchRecipes);
